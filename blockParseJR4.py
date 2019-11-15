@@ -114,6 +114,7 @@ class SequenceCrawler:
         
         # Variables for tracking reverse compliment success
         self.rPass = False
+        self.currentSeqR = "null"
 
         # Declare complementary relationships.
         self.comps = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
@@ -459,6 +460,8 @@ class SequenceCrawler:
         
         if self.Ncheckopt(seqReverse) == -1 and self.prohibitCheck(seqReverse) \
            and self.tmCheck(seq5, ind, i, j) and self.reverseGCheck(seqReverse):
+            self.rPass = True
+            self.currentSeqR = seqReverse
             return True
 
             
@@ -702,8 +705,14 @@ class SequenceCrawler:
                 # success to terminal if requested.
                 if not (i + j + self.l >= int(blockLen) or j >= sizeRange):
                     startPos = self.start + i
-                    cands.append((str(startPos), str(startPos + j + self.l - 1),
-                                  str(self.block[i:i + j + self.l])))
+                    if self.rPass:
+                        cands.append((str(startPos), str(startPos + j + self.l - 1),
+                                      self.currentSeqR, 1))
+                        self.rPass = False
+                        self.currentSeqR = "null"              
+                    else:   
+                        cands.append((str(startPos), str(startPos + j + self.l - 1),
+                                      str(self.block[i:i + j + self.l]), 0))                   
                     if self.verbocity:
                         print ('Picking a candidate probe of %d bases starting '
                                'at base %d' % (self.l + j, startPos))
@@ -764,8 +773,12 @@ class SequenceCrawler:
             quals = ['~' * len(cands[i][2]) for i in range(len(cands))]
 
             # Build the output file.
-            for i, (start, end, seq) in enumerate(cands):
-                outList.append('@%s:%s-%s\n%s\n+\n%s' % (chrom, start, end, seq,
+            for i, (start, end, seq, r) in enumerate(cands):
+                if r == 1:
+                    outList.append('@%s:%s-%s%s\n%s\n+\n%s' % (chrom, start, end, '|-', seq,
+                                                         quals[i]))
+                else:
+                    outList.append('@%s:%s-%s%s\n%s\n+\n%s' % (chrom, start, end, '|+', seq,
                                                          quals[i]))
 
             # Write the output file.
