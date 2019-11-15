@@ -114,6 +114,7 @@ class SequenceCrawler:
         
         # Variables for tracking reverse compliment success
         self.rPass = False
+        self.currentSeqR = "null"
 
         # Declare complementary relationships.
         self.comps = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
@@ -460,6 +461,7 @@ class SequenceCrawler:
         if self.Ncheckopt(seqReverse) == -1 and self.prohibitCheck(seqReverse) \
            and self.tmCheck(seq5, ind, i, j) and self.reverseGCheck(seqReverse):
             self.rPass = True
+            self.currentSeqR = seqReverse
             return True
 
             
@@ -705,8 +707,9 @@ class SequenceCrawler:
                     startPos = self.start + i
                     if self.rPass:
                         cands.append((str(startPos), str(startPos + j + self.l - 1),
-                                      str(self.block[i:i + j + self.l]), 1))
-                        self.rPass = False              
+                                      self.currentSeqR, 1))
+                        self.rPass = False
+                        self.currentSeqR = "null"              
                     else:   
                         cands.append((str(startPos), str(startPos + j + self.l - 1),
                                       str(self.block[i:i + j + self.l]), 0))                   
@@ -772,10 +775,10 @@ class SequenceCrawler:
             # Build the output file.
             for i, (start, end, seq, r) in enumerate(cands):
                 if r == 1:
-                    outList.append('@%s:%s-%s%s\n%s\n+\n%s' % (chrom, start, end, ' Reverse', seq,
+                    outList.append('@%s:%s-%s%s\n%s\n+\n%s' % (chrom, start, end, '|-', seq,
                                                          quals[i]))
                 else:
-                    outList.append('@%s:%s-%s\n%s\n+\n%s' % (chrom, start, end, seq,
+                    outList.append('@%s:%s-%s%s\n%s\n+\n%s' % (chrom, start, end, '|+', seq,
                                                          quals[i]))
 
             # Write the output file.
