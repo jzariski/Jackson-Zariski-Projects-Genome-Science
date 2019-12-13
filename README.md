@@ -7,3 +7,6 @@ verifyReverse --verifies the reverse compliment check and the normal g check wor
 
 In progress
 JR4-- Reverse compliment check, output and error screens fixed
+
+
+JR5 all but the command lind argument
