@@ -1,12 +1,9 @@
-# reverse-compliment-project
+# UW Genome Science Projects--Beliveau Lab
 
-Completed Scripts
-JR3-- Reverse compliment check, no output or error screens fixed
-verify --verifies the normal blockParse g check is working
-verifyReverse --verifies the reverse compliment check and the normal g check work
+Completed Scripts--blockParse analyzes strands of DNA and identifies areas suitable for probe attachement and subsequent analysis using spectral microscopy.
 
-In progress
-JR4-- Reverse compliment check, output and error screens fixed
+   JR5-- Reverse compliment check, no output or error screens fixed
+   verify --verifies the normal blockParse g check is working
+   verifyReverse --verifies the reverse compliment check and the normal g check work
 
-
-JR5 all but the command lind argument
+Scripts not listed are still in progress
