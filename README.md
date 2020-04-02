@@ -9,3 +9,7 @@ Completed Scripts--blockParse analyzes strands of DNA and identifies areas suita
    verifyReverse --verifies the reverse compliment check and the normal g check work
 
 Scripts not listed are still in progress
+
+Also included script for analyzation of blockParse Meta files.
+
+Also included findLength script which takes a fastq file as an input and outputs the sequence length that occurs most.
