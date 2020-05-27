@@ -197,7 +197,11 @@ public class AnalyzeFile {
          double avgTemp = tempSum / totalSeq;
          System.out.println("Count of sequences by length");
          System.out.println();
-         System.out.println(countMap);
+         System.out.println("Length            Total");
+         for (int key : countMap.keySet()) {
+            System.out.println(key + "                 " + countMap.get(key));
+         }
+
          System.out.println();
          System.out.println("Count of Sequences by avg melting temp");
          System.out.println();
@@ -206,7 +210,11 @@ public class AnalyzeFile {
             double atemp = countTempMap.get(length) / countMap.get(length);
             finalMap.put(length, atemp);
          }
-         System.out.println(finalMap);
+         System.out.println("Length            Avg Temp");
+         for (int key : finalMap.keySet()) {
+            System.out.println(key + "                 " + finalMap.get(key));
+         }
+         
          System.out.println();
          System.out.println("Total Average Melting Temp: " + avgTemp);
          System.out.println();
@@ -237,7 +245,10 @@ public class AnalyzeFile {
         }
         System.out.println("Count of sequences by length");
         System.out.println();
-        System.out.println(finalMap);
+        System.out.println("Length            Total");
+        for (int key : finalMap.keySet()) {
+            System.out.println(key + "                 " + finalMap.get(key));
+        }
 
     }
 
